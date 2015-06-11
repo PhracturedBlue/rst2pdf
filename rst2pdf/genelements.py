@@ -791,7 +791,8 @@ class HandleContainer(NodeHandler, docutils.nodes.container):
     def getelements(self, client, node, style):
         parent = node.parent
         if not isinstance(parent, (docutils.nodes.header, docutils.nodes.footer)):
-            return NodeHandler.getelements(self, client, node, style)
+            elems = NodeHandler.getelements(self, client, node, style)
+            return [elems]
         return self.gather_elements(client, node, style)
 
 class HandleSubstitutionDefinition(NodeHandler, docutils.nodes.substitution_definition):
