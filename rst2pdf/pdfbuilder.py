@@ -113,6 +113,7 @@ class PDFBuilder(Builder):
                                 section_header_depth=opts.get('section_header_depth',self.config.section_header_depth),
                                 srcdir=self.srcdir,
                                 style_path=opts.get('pdf_style_path', self.config.pdf_style_path),
+                                floating_images=opts.get('pdf_floating_images',self.config.pdf_floating_images),
                                 config=self.config,
                                 )
 
@@ -483,6 +484,7 @@ class PDFWriter(writers.Writer):
                 section_header_depth = 2,
                 baseurl = urlunparse(['file',os.getcwd()+os.sep,'','','','']),
                 style_path = None,
+                floating_images = False,
                 config = {}):
         writers.Writer.__init__(self)
         self.builder = builder
@@ -509,6 +511,7 @@ class PDFWriter(writers.Writer):
         self.use_numbered_links=use_numbered_links
         self.fit_background_mode=fit_background_mode
         self.section_header_depth=section_header_depth
+        self.floating_images=floating_images
         self.baseurl = baseurl
         if hasattr(sys, 'frozen'):
             self.PATH = abspath(dirname(sys.executable))
@@ -615,7 +618,8 @@ class PDFWriter(writers.Writer):
                  numbered_links=self.use_numbered_links,
                  background_fit_mode=self.fit_background_mode,
                  baseurl=self.baseurl,
-                 section_header_depth=self.section_header_depth
+                 section_header_depth=self.section_header_depth,
+                 floating_images=self.floating_images
                 ).createPdf(doctree=self.document,
                     output=sio,
                     compressed=self.compressed)
@@ -898,6 +902,7 @@ def setup(app):
     app.add_config_value('pdf_fit_background_mode',"scale", None)
     app.add_config_value('section_header_depth',2, None)
     app.add_config_value('pdf_baseurl', urlunparse(['file',os.getcwd()+os.sep,'','','','']), None)
+    app.add_config_value('pdf_floating_images', False, None)
 
     author_texescaped = unicode(app.config.copyright)\
                                .translate(texescape.tex_escape_map)
