@@ -41,7 +41,6 @@ from smartypants import smartyPants
 import docutils.nodes
 from flowables import BoundByWidth, TocEntry
 
-
 class MetaHelper(type):
     ''' MetaHelper is designed to generically enable a few of the benefits of
         using metaclasses by encapsulating some of the complexity of setting
@@ -263,7 +262,7 @@ class NodeHandler(object):
         return self.pre, self.post
 
     def get_text(self, client, node, replaceEnt):
-        return client.gather_pdftext(node)
+        return client.gather_pdftext(node, replaceEnt=replaceEnt)
 
     def apply_smartypants(self, text, smarty, node):
         # Try to be clever about when to use smartypants

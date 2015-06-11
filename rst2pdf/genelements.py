@@ -883,7 +883,8 @@ class HandleRaw(NodeHandler, docutils.nodes.raw):
             return x
         else:
             return []
-
+    def get_text(self, client, node, replaceEnt=True):
+        return client.gather_pdftext(node, replaceEnt=False if client.raw_html and node.get('format','NONE').lower()=='html' else True)
 
 class HandleOddEven (NodeHandler, OddEvenNode):
     def gather_elements(self, client, node, style):
