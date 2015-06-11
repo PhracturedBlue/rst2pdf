@@ -431,6 +431,9 @@ class MyImage (Flowable):
     def _unRestrictSize(self,aW,aH):
         return self.image._unRestrictSize(aW, aH)
 
+    def _unRestrictSize(self):
+        return self.image._unRestrictSize()
+
     def __deepcopy__(self, *whatever):
         # ImageCore class is not deep copyable.  Stop the copy at this
         # class.  If you remove this, re-test for issue #126.
